@@ -30,10 +30,17 @@
 ### 安装
 
 ```bash
-pip install kangclaw
-```
+# 方式一：uv（推荐）
+uv tool install kangclaw
 
-> 开发模式安装（本地开发用）：`pip install -e .`
+# 方式二：pip
+pip install kangclaw
+
+# 方式三：从源码安装
+git clone https://github.com/lvkangk/KangClaw.git
+cd KangClaw
+pip install -e .
+```
 
 ### 初始化
 
@@ -64,8 +71,10 @@ kangclaw init
 # 前台启动 gateway
 kangclaw gateway
 
-# 打开 Web UI
+# 打开 Web UI（推荐）
 kangclaw web
+
+# 或
 
 # CLI 终端对话
 kangclaw chat
