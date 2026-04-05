@@ -56,36 +56,16 @@ kangclaw init
     └── cron/            # 定时任务
 ```
 
-### 配置模型
-
-编辑 `~/.kangclaw/config.toml`，填入你的 API Key：
-
-```toml
-[[model]]
-primary_key = "default"
-id = "gpt-4o"
-show_name = "GPT-4o"
-provider = "openai"
-api_key = "${OPENAI_API_KEY}"
-base_url = ""
-context_window_tokens = 128000
-```
-
-支持使用环境变量 `${ENV_VAR}` 来管理敏感信息。
-
 ### 启动
 
 ```bash
 # 前台启动 gateway
 kangclaw gateway
 
-# 后台启动
-kangclaw gateway -d
-
 # 打开 Web UI
 kangclaw web
 
-# 终端对话
+# CLI 终端对话
 kangclaw chat
 ```
 
@@ -106,57 +86,9 @@ kangclaw chat
 | `kangclaw cron list` | 查看定时任务 |
 | `kangclaw cron remove <id>` | 删除定时任务 |
 
-## 架构
-
-```
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│   终端 CLI   │  │   Web UI     │  │  QQ/飞书/钉钉 │
-└──────┬───────┘  └──────┬───────┘  └──────┬───────┘
-       │                 │                 │
-       └────────┬────────┴────────┬────────┘
-                │                 │
-         ┌──────▼──────┐   ┌─────▼─────┐
-         │  WebSocket  │   │  Channels  │
-         └──────┬──────┘   └─────┬─────┘
-                │                │
-         ┌──────▼────────────────▼──────┐
-         │          Router              │
-         └──────────────┬───────────────┘
-                        │
-         ┌──────────────▼───────────────┐
-         │           Agent              │
-         │  ┌───────┐ ┌──────────────┐  │
-         │  │ Tools │ │ Memory Mgr   │  │
-         │  └───────┘ └──────────────┘  │
-         │  ┌───────────────────────┐   │
-         │  │   LLM (LangChain)    │   │
-         │  └───────────────────────┘   │
-         └──────────────────────────────┘
-```
-
-**Gateway 模式**：一个 FastAPI 进程统一管理 LLM 交互、会话记忆、工具执行、定时任务和多渠道消息。Agent 使用自定义工具调用循环（非 LangChain AgentExecutor），支持流式输出、并发会话锁和消息队列。
-
-## 内置工具
-
-| 工具 | 说明 |
-|------|------|
-| `read_file` | 读取文件内容 |
-| `write_file` | 写入文件 |
-| `edit_file` | 编辑文件（精确替换） |
-| `list_files` | 列出目录文件 |
-| `grep_file` | 搜索文件内容 |
-| `exec_command` | 执行 Shell 命令 |
-| `web_search` | Web 搜索（DuckDuckGo） |
-| `web_fetch` | 抓取网页内容 |
-| `cron_list` | 查看定时任务 |
-| `cron_add` | 添加定时任务 |
-| `cron_remove` | 删除定时任务 |
-| `image_filter` | 图片滤镜处理 |
-| `image_watermark` | 图片加水印 |
-| `image_convert` | 图片格式转换 |
-| `send_image` | 发送图片到渠道 |
 
 ## 渠道配置
+建议打开 Web UI配置
 
 ### QQ 机器人
 
@@ -166,7 +98,7 @@ name = "qq"
 enabled = true
 app_id = "${QQ_BOT_APPID}"
 app_secret = "${QQ_BOT_APPSECRET}"
-allow_from = []   # 空数组表示不限制
+allow_from = []
 ```
 
 ### 飞书机器人
@@ -212,7 +144,3 @@ pip install -e .
 # 运行测试
 pytest tests/
 ```
-
-## 许可证
-
-[MIT](LICENSE)
