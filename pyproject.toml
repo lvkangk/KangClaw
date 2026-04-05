@@ -9,6 +9,13 @@ description = "本地个人AI助手"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
+authors = [
+    {name = "lvkangk"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
 dependencies = [
     "typer>=0.24",
     "fastapi>=0.135",
@@ -35,6 +42,11 @@ dependencies = [
 
 [project.scripts]
 kangclaw = "kangclaw.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/lvkangk/KangClaw"
+Repository = "https://github.com/lvkangk/KangClaw"
+Issues = "https://github.com/lvkangk/KangClaw/issues"
 
 [tool.setuptools.dynamic]
 version = {attr = "kangclaw.__version__"}

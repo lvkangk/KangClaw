@@ -30,8 +30,10 @@
 ### 安装
 
 ```bash
-pip install -e .
+pip install kangclaw
 ```
+
+> 开发模式安装（本地开发用）：`pip install -e .`
 
 ### 初始化
 
