@@ -42,6 +42,16 @@ cd KangClaw
 pip install -e .
 ```
 
+### 更新
+
+```bash
+# uv
+uv tool upgrade kangclaw
+
+# pip
+pip install --upgrade kangclaw
+```
+
 ### 初始化
 
 ```bash
