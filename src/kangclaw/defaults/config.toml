@@ -1,0 +1,55 @@
+# kangclaw 全局配置文件
+# 敏感信息请使用环境变量，格式：${ENV_VAR_NAME}
+
+[general]
+log_level = "info"       # debug / info / warning / error
+workspace = "${HOME}/.kangclaw/workspace"
+
+[agent]
+max_iterations = 50
+show_tool_calls = true
+auto_greeting = true
+model_primary_key = "default"
+
+[web]
+enabled = true
+host = "127.0.0.1"
+port = 12255
+
+[memory]
+max_history = 20
+session_load_limit = 50
+
+[heartbeat]
+enabled = true
+interval_minutes = 30
+
+[[model]]
+primary_key = "default"
+id = "gpt-4o"
+show_name = "GPT-4o"
+provider = "openai"
+api_key = "${OPENAI_API_KEY}"
+base_url = ""
+context_window_tokens = 0   # 模型上下文窗口大小（token），0=不启用自动压缩，建议设为模型实际窗口值如 128000
+
+[[channel]]
+name = "qq"
+enabled = false
+app_id = "${QQ_BOT_APPID}"
+app_secret = "${QQ_BOT_APPSECRET}"
+allow_from = []
+
+[[channel]]
+name = "feishu"
+enabled = false
+app_id = "${FEISHU_APP_ID}"
+app_secret = "${FEISHU_APP_SECRET}"
+allow_from = []
+
+[[channel]]
+name = "dingtalk"
+enabled = false
+client_id = "${DINGTALK_CLIENT_ID}"
+client_secret = "${DINGTALK_CLIENT_SECRET}"
+allow_from = []

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kangclaw"
+dynamic = ["version"]
+description = "本地个人AI助手"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "typer>=0.24",
+    "fastapi>=0.135",
+    "uvicorn[standard]>=0.42",
+    "websockets>=16.0",
+    "langchain-core>=1.2",
+    "langchain-openai>=1.1",
+    "langchain-anthropic>=1.4",
+    "langchain-google-genai>=4.2",
+    "langchain-community>=0.4",
+    "apscheduler>=3.11,<4",
+    "ddgs>=9.12",
+    "qq-botpy>=1.2.1",
+    "lark-oapi>=1.5",
+    "dingtalk-stream>=0.24",
+    "aiohttp>=3.9",
+    "pdfplumber>=0.11",
+    "Pillow>=10.0",
+    "tiktoken>=0.7",
+    "rich>=14.3",
+    "prompt-toolkit>=3.0",
+    "tomli_w>=1.0",
+]
+
+[project.scripts]
+kangclaw = "kangclaw.cli:app"
+
+[tool.setuptools.dynamic]
+version = {attr = "kangclaw.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+kangclaw = ["defaults/*", "web_ui/static/*", "web_ui/static/vendor/*"]
