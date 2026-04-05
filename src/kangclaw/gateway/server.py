@@ -902,7 +902,7 @@ def _print_banner():
         console.print(txt)
 
     from kangclaw import __version__
-    console.print(f" [dim]v{__version__}  ·  Local AI Assistant Framework[/dim]\n")
+    console.print(f" [dim]v{__version__}  ·  你的个人 AI 助手[/dim]\n")
 
 
 def run_gateway(channel_filter: str | None = None):
