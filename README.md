@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" width="280" alt="KangClaw Logo" />
+  <img src="images/logo.png" width="280" alt="KangClaw Logo" />
 </p>
 
 <h1 align="center">KangClaw</h1>
@@ -30,7 +30,7 @@
 ### 安装
 
 ```bash
-# 方式一：uv（推荐）
+# 方式一：uv
 uv tool install kangclaw
 
 # 方式二：pip
@@ -40,16 +40,6 @@ pip install kangclaw
 git clone https://github.com/lvkangk/KangClaw.git
 cd KangClaw
 pip install -e .
-```
-
-### 更新
-
-```bash
-# uv
-uv tool upgrade kangclaw
-
-# pip
-pip install --upgrade kangclaw
 ```
 
 ### 初始化
@@ -75,22 +65,58 @@ kangclaw init
     └── cron/            # 定时任务
 ```
 
-### 启动
+### 启动网关
 
 ```bash
 # 前台启动 gateway
 kangclaw gateway
-
-# 打开 Web UI（推荐）
-kangclaw web
-
-# 或
-
-# CLI 终端对话
-kangclaw chat
 ```
 
-## CLI 命令
+### 打开 Web UI
+```bash
+kangclaw web
+```
+或者直接在浏览器访问 [http://127.0.0.1:12255/](http://127.0.0.1:12255/)
+
+## Web UI 功能
+
+打开 Web UI 后，左侧导航栏提供以下功能：
+
+### 聊天
+与 AI 助手实时对话。
+
+<img src="images/chat.png" width="800" />
+
+### 模型配置
+选择和配置 LLM 供应商，设置 API Key、模型名称、上下文长度等参数。
+
+<img src="images/model.png" width="800" />
+
+### 消息频道
+配置多端接入渠道（QQ 机器人、飞书机器人、钉钉机器人），填写对应的凭证信息即可启用。
+
+<img src="images/channel.png" width="800" />
+
+### 技能管理
+查看和管理已安装的技能，扩展 AI 助手的能力。
+
+<img src="images/skills.png" width="800" />
+
+### 定时任务
+查看AI 助手创建的 Cron 定时任务。
+
+<img src="images/cron.png" width="800" />
+
+### 心跳巡检
+查看心跳任务，AI 助手会定期检查任务列表并自动执行。
+
+<img src="images/heartbeat.png" width="800" />
+
+### 其他配置
+
+<img src="images/other.png" width="800" />
+
+## CLI 命令速查表
 
 | 命令 | 说明 |
 |------|------|
@@ -108,60 +134,12 @@ kangclaw chat
 | `kangclaw cron remove <id>` | 删除定时任务 |
 
 
-## 渠道配置
-建议打开 Web UI配置
-
-### QQ 机器人
-
-```toml
-[[channel]]
-name = "qq"
-enabled = true
-app_id = "${QQ_BOT_APPID}"
-app_secret = "${QQ_BOT_APPSECRET}"
-allow_from = []
-```
-
-### 飞书机器人
-
-```toml
-[[channel]]
-name = "feishu"
-enabled = true
-app_id = "${FEISHU_APP_ID}"
-app_secret = "${FEISHU_APP_SECRET}"
-allow_from = []
-```
-
-### 钉钉机器人
-
-```toml
-[[channel]]
-name = "dingtalk"
-enabled = true
-client_id = "${DINGTALK_CLIENT_ID}"
-client_secret = "${DINGTALK_CLIENT_SECRET}"
-allow_from = []
-```
-
-## 技能系统
-
-在 `~/.kangclaw/workspace/skills/` 下创建目录，添加 `SKILL.md` 即可注册技能：
-
-```
-skills/
-└── weather/
-    └── SKILL.md
-```
-
-`SKILL.md` 使用 YAML frontmatter 定义元信息，正文为技能的使用说明和提示词。
-
-## 开发
+## 更新
 
 ```bash
-# 安装开发依赖
-pip install -e .
+# 方式一：uv
+uv tool upgrade kangclaw
 
-# 运行测试
-pytest tests/
+# 方式二：pip
+pip install --upgrade kangclaw
 ```
