@@ -1870,7 +1870,9 @@ main.drag-over {
     padding: 6px 10px;
     font-size: 12px;
     font-weight: 400;
-    white-space: nowrap;
+    white-space: normal;
+    max-width: 260px;
+    width: max-content;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.1s;
