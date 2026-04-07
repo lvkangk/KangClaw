@@ -333,14 +333,22 @@ class Agent:
 
             # 流式调用 — 使用 LangChain 1.x 推荐的 chunk 累积模式
             gathered: AIMessageChunk | None = None
-            async for chunk in self.llm_with_tools.astream(messages):
-                if isinstance(chunk, AIMessageChunk):
-                    # 累积 chunk，自动合并 content 和 tool_call_chunks
-                    gathered = chunk if gathered is None else gathered + chunk
-                    # 实时推送文本 token
-                    if chunk.content:
-                        token = chunk.content if isinstance(chunk.content, str) else str(chunk.content)
-                        yield token
+            try:
+                async for chunk in self.llm_with_tools.astream(messages):
+                    if self._is_cancelled(session_id):
+                        break
+                    if isinstance(chunk, AIMessageChunk):
+                        # 累积 chunk，自动合并 content 和 tool_call_chunks
+                        gathered = chunk if gathered is None else gathered + chunk
+                        # 实时推送文本 token
+                        if chunk.content:
+                            token = chunk.content if isinstance(chunk.content, str) else str(chunk.content)
+                            yield token
+            except asyncio.CancelledError:
+                self.memory.append_message(session_id, Message(
+                    role="assistant", content="[网关关闭，执行被中断]"
+                ))
+                return
 
             if gathered is None:
                 return

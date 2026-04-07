@@ -202,17 +202,20 @@ def create_app(config: AppConfig | None = None, channel_filter: str | None = Non
         # ── shutdown ──
         logger.info("kangclaw gateway 正在关闭...")
 
-        # 1. 取消所有进行中的 agent 会话，等待退出
+        # 1. 先停调度器，防止新的心跳/cron 任务被触发
+        _scheduler.stop()
+
+        # 2. 取消所有进行中的 agent 会话，等待退出
         await agent.shutdown(timeout=3.0)
 
-        # 2. 通知各渠道正在进行的会话（更新飞书卡片等）
+        # 3. 通知各渠道正在进行的会话（更新飞书卡片等）
         for ch in _channels.values():
             try:
                 await ch.shutdown_notify()
             except Exception as e:
                 logger.error(f"渠道 shutdown_notify 失败: {e}")
 
-        # 3. 通知 WebSocket 客户端
+        # 4. 通知 WebSocket 客户端
         for sid, ws_set in list(_ws_connections.items()):
             for ws in list(ws_set):
                 try:
@@ -221,8 +224,7 @@ def create_app(config: AppConfig | None = None, channel_filter: str | None = Non
                 except Exception:
                     pass
 
-        # 4. 停止调度器和渠道
-        _scheduler.stop()
+        # 5. 停止渠道
         for ch in _channels.values():
             try:
                 await ch.stop()

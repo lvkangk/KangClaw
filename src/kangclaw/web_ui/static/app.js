@@ -592,7 +592,7 @@ function renderSkillsPage(skills) {
     if (!skills || skills.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'skill-empty-state';
-        empty.innerHTML = '<svg width="40" height="40" viewBox="0 0 16 16" fill="none"><path d="M9 1L4 9h4l-1 6 5-8H8l1-6z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span>暂无用户技能</span>';
+        empty.innerHTML = '<svg width="40" height="40" viewBox="0 0 16 16" fill="none"><path d="M9 1L4 9h4l-1 6 5-8H8l1-6z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span>暂未安装任何技能</span>';
         skillsPageBody.appendChild(empty);
         return;
     }
